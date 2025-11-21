@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomButton extends StatefulWidget {
+class CustomButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final String text;
   final Color? color;
@@ -8,9 +8,9 @@ class CustomButton extends StatefulWidget {
   final double borderRadius;
   final EdgeInsetsGeometry padding;
   final double elevation;
-  final double width;
-  final double minWidth;
-  final double maxWidth;
+  final dynamic width;
+  final dynamic height;
+  final double fontSize;
 
   const CustomButton({
     Key? key,
@@ -21,77 +21,33 @@ class CustomButton extends StatefulWidget {
     this.borderRadius = 8.0,
     this.padding = const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
     this.elevation = 2.0,
-    this.width = 180.0,
-    this.minWidth = 100.0,
-    this.maxWidth = 300.0,
+    this.width,
+    this.height,
+    this.fontSize = 16.0,
   }) : super(key: key);
-
-  @override
-  State<CustomButton> createState() => _CustomButtonState();
-}
-
-class _CustomButtonState extends State<CustomButton> {
-  late double _borderRadius;
-  late double _width;
-
-  @override
-  void initState() {
-    super.initState();
-    _borderRadius = widget.borderRadius;
-    _width = widget.width;
-  }
-
-  void _incrementRadius() {
-    setState(() {
-      _borderRadius += 4;
-    });
-  }
-
-  void _decrementRadius() {
-    setState(() {
-      if (_borderRadius > 0) {
-        _borderRadius -= 4;
-      }
-    });
-  }
-
-  void _incrementWidth() {
-    setState(() {
-      if (_width + 10 <= widget.maxWidth) {
-        _width += 10;
-      }
-    });
-  }
-
-  void _decrementWidth() {
-    setState(() {
-      if (_width - 10 >= widget.minWidth) {
-        _width -= 10;
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      elevation: widget.elevation,
-      borderRadius: BorderRadius.circular(widget.borderRadius),
-      color: widget.color ?? Theme.of(context).primaryColor,
+      elevation: elevation,
+      borderRadius: BorderRadius.circular(borderRadius),
+      color: color ?? Theme.of(context).primaryColor,
       child: InkWell(
-        borderRadius: BorderRadius.circular(widget.borderRadius),
-        onTap: widget.onPressed,
+        borderRadius: BorderRadius.circular(borderRadius),
+        onTap: onPressed,
         child: Container(
-          width: widget.width == double.infinity ? double.infinity : _width,
-          padding: widget.padding,
+          width: width,
+          height: height,
+          padding: padding,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(widget.borderRadius),
+            borderRadius: BorderRadius.circular(borderRadius),
           ),
           child: Text(
-            widget.text,
+            text,
             style: TextStyle(
-              color: widget.textColor ?? Colors.white,
-              fontSize: 16,
+              color: textColor ?? Colors.white,
+              fontSize: fontSize,
               fontWeight: FontWeight.w600,
             ),
           ),

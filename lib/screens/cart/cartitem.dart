@@ -4,6 +4,7 @@ import 'package:nexacloth/components/card/cart_item_card.dart';
 import 'package:nexacloth/components/gaps.dart';
 import 'package:nexacloth/components/header/back_header.dart';
 import 'package:nexacloth/components/order_summary.dart';
+import 'package:nexacloth/components/toast_message.dart';
 import 'package:nexacloth/screens/checkout/checkout.dart';
 
 class CardItemScreen extends StatefulWidget {
@@ -15,20 +16,34 @@ class CardItemScreen extends StatefulWidget {
 }
 
 class _CardItemScreenState extends State<CardItemScreen> {
+  int quantity = 1;
   Widget _buildBody() {
     final bodyContent = Stack(
       children: [
         Column(
           children: [
+            Gaps.h10,
             CartItemCard(
               imageUrl: 'https://picsum.photos/200/300',
               productName: 'Product Name',
               description: 'Rolex Watch',
               price: '\$100',
-              quantity: 1,
+              quantity: quantity,
               onDelete: () {},
-              onDecrease: () {},
-              onIncrease: () {},
+              onDecrease: () {
+                quantity > 1
+                    ? setState(() {
+                        quantity--;
+                      })
+                    : null;
+              },
+              onIncrease: () {
+                quantity < 10
+                    ? setState(() {
+                        quantity++;
+                      })
+                    : ToastMessage.show(context, 'Maximum quantity reached');
+              },
             ),
           ],
         ),

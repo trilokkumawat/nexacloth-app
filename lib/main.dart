@@ -21,7 +21,7 @@ void main() async {
   CachedQuery.instance.configFlutter(
     config: GlobalQueryConfig(
       refetchDuration: const Duration(seconds: 2),
-      // cacheDuration: const Duration(seconds: 2),
+      cacheDuration: const Duration(seconds: 10),
       refetchOnConnection: true,
       refetchOnResume: true,
     ),

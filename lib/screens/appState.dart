@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nexacloth/components/safe_set_state_mixin.dart';
 import 'package:nexacloth/screens/home_screen.dart';
+import 'package:nexacloth/screens/search/searchscreen.dart';
 import 'package:nexacloth/screens/settings_screen.dart';
 import 'package:nexacloth/screens/cart/cartitem.dart';
 
@@ -17,7 +18,7 @@ class _AppStateState extends State<AppState> with SafeSetStateMixin {
   // List of all screens - IndexedStack will keep them all alive
   final List<Widget> _screens = [
     const HomeScreen(),
-    const HomeScreen(),
+    const Searchscreen(),
     const CardItemScreen(isHeaderVisible: false),
     const SettingsScreen(),
   ];

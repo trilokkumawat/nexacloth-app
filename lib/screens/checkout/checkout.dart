@@ -7,6 +7,7 @@ import 'package:nexacloth/components/icon_button_circle.dart';
 import 'package:nexacloth/components/header/back_header.dart';
 import 'package:nexacloth/components/order_summary.dart';
 import 'package:nexacloth/components/payment_method_card.dart';
+import 'package:nexacloth/screens/order/order.dart';
 
 class CheckOutScreen extends StatefulWidget {
   const CheckOutScreen({super.key});
@@ -113,7 +114,12 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             Gaps.h10,
             CustomButton(
               text: 'Check Out',
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => OrderScreen()),
+                );
+              },
               width: double.infinity,
               borderRadius: 20,
             ),

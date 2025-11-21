@@ -130,7 +130,7 @@ class _ProductDetailsState extends State<ProductDetails>
                         height: 400,
                         child: Image.network(
                           product.images ?? "",
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                         ),
                       ),
                       Positioned(
@@ -150,7 +150,11 @@ class _ProductDetailsState extends State<ProductDetails>
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              product.name?.substring(0, 20) ?? "",
+                              product.name != null
+                                  ? product.name!.length > 20
+                                        ? "${product.name!.substring(0, 20)}..."
+                                        : product.name!
+                                  : "",
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: AppTextStyle.h4,
@@ -189,7 +193,11 @@ class _ProductDetailsState extends State<ProductDetails>
                         Gaps.h10,
                         Text("Description", style: AppTextStyle.h6),
                         Text(
-                          "${product.description?.substring(0, 300) ?? ""}",
+                          product.description != null
+                              ? product.description!.length > 300
+                                    ? "${product.description!.substring(0, 300)}..."
+                                    : product.description!
+                              : "",
                           style: AppTextStyle.custom(
                             fontSize: CustomFontSize.bodyMedium,
                             fontWeight: FontWeight.w400,
