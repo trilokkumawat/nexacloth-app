@@ -21,12 +21,12 @@ class _SplashScreenState extends State<SplashScreen> {
   void _checkAuthAndNavigate() async {
     // Wait for splash screen to show for at least 1 second
     await Future.delayed(const Duration(seconds: 1));
-    
+
     if (!mounted) return;
 
     // Check authentication state
     final isAuthenticated = SupabaseAuth.isAuthenticated;
-    
+
     if (mounted) {
       if (isAuthenticated) {
         // User is logged in, navigate to home
@@ -45,16 +45,9 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
-              Icons.shopping_bag,
-              size: 100,
-              color: Colors.deepPurple,
-            ),
+            const Icon(Icons.shopping_bag, size: 100, color: Colors.deepPurple),
             const SizedBox(height: 20),
-            Text(
-              'NexaCloth',
-              style: AppTextStyle.h1,
-            ),
+            Text('NexaCloth', style: AppTextStyle.h1),
             const SizedBox(height: 20),
             const CircularProgressIndicator(),
           ],
@@ -63,4 +56,3 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
-

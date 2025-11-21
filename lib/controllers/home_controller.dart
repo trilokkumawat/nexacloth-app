@@ -1,3 +1,4 @@
+import 'package:cached_query_flutter/cached_query_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:nexacloth/controllers/basecontroller.dart';
 import 'package:nexacloth/core/supabase/supabase_curdoperation.dart';
@@ -62,5 +63,17 @@ class HomeController extends FlutterFlowModel<HomeScreen> {
       debugPrint(e.toString());
       return [];
     }
+  }
+
+  Query<List<dynamic>> getcachedProductsWithCategory() {
+    print('getcachedProductsWithCategory');
+    return Query<List<dynamic>>(
+      key: 'productsWithCategory', // Unique key for this query
+      queryFn: () async {
+        final products = await getproductwithcategory();
+        print('products: $products');
+        return products;
+      },
+    );
   }
 }

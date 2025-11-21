@@ -1,3 +1,4 @@
+import 'package:cached_query_flutter/cached_query_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:nexacloth/components/appcolor.dart';
 import 'package:nexacloth/components/apptextstyle.dart';
@@ -24,21 +25,19 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with SafeSetStateMixin {
   late HomeController _controller;
-  late Future<List<dynamic>> _categoryWithProductsFuture;
+  late Query<List<dynamic>> _categoryWithProductsFuture;
   final UserInfoService user = UserInfoService();
 
   @override
   void initState() {
     super.initState();
     _controller = createModel(context, () => HomeController());
-    _categoryWithProductsFuture = _controller.getproductwithcategory();
+    _categoryWithProductsFuture = _controller.getcachedProductsWithCategory();
   }
 
   Future<void> _refreshData() async {
-    safeSetState(() {
-      _categoryWithProductsFuture = _controller.getproductwithcategory();
-    });
-    await _categoryWithProductsFuture;
+    // Refetch the query to get fresh data
+    await _categoryWithProductsFuture.refetch();
   }
 
   @override
@@ -172,23 +171,17 @@ class _HomeScreenState extends State<HomeScreen> with SafeSetStateMixin {
                   ),
                   Gaps.h12,
 
-                  FutureBuilder<List<dynamic>>(
-                    future: _categoryWithProductsFuture,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
-                      }
-
-                      if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                        return Center(
-                          child: Text('No categories with products found'),
-                        );
+                  QueryBuilder<QueryStatus<List<dynamic>>>(
+                    query: _categoryWithProductsFuture,
+                    builder: (context, state) {
+                      if (state.isLoading) {
+                        return const Center(child: CircularProgressIndicator());
                       }
 
                       // Group products by category with category_id
                       Map<String, Map<String, dynamic>> groupedCategories = {};
 
-                      for (var item in snapshot.data!) {
+                      for (var item in state.data!) {
                         if (item is Map && item.isNotEmpty) {
                           final categoryName = item.keys.first.toString();
                           final productMap = item.values.first;

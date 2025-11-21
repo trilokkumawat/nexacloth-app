@@ -1,3 +1,5 @@
+import 'package:cached_query_flutter/cached_query_flutter.dart';
+import 'package:cached_storage/cached_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:nexacloth/core/route/app_router.dart';
@@ -15,6 +17,15 @@ void main() async {
   await SupabaseService.initialize(
     supabaseUrl: dotenv.env['SUPABASE_URL'] ?? '',
     supabaseAnonKey: dotenv.env['SUPABASE_ANON_KEY'] ?? '',
+  );
+  CachedQuery.instance.configFlutter(
+    config: GlobalQueryConfig(
+      refetchDuration: const Duration(seconds: 2),
+      // cacheDuration: const Duration(seconds: 2),
+      refetchOnConnection: true,
+      refetchOnResume: true,
+    ),
+    storage: await CachedStorage.ensureInitialized(),
   );
 
   // Listen to auth state changes and refresh router
